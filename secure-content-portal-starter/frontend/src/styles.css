@@ -1,0 +1,179 @@
+:root {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  color: #14213d;
+  background: #f5f7fb;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding: 24px 7%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar h1 { margin: 0; font-size: 26px; }
+.topbar p { margin: 6px 0 0; color: #667085; }
+
+.role-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.role-box select,
+.form-grid input,
+.form-grid select,
+.admin-panel textarea {
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  padding: 11px 12px;
+  background: white;
+}
+
+.container {
+  width: min(1100px, 88%);
+  margin: 34px auto 70px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  background: white;
+  padding: 34px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.hero h2 {
+  font-size: 34px;
+  margin: 12px 0;
+}
+
+.hero p {
+  max-width: 660px;
+  line-height: 1.6;
+  color: #667085;
+}
+
+.badge, .tag, .type {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  background: #eef2ff;
+}
+
+.google-btn, .primary, .actions button {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 16px;
+  cursor: pointer;
+}
+
+.google-btn, .primary {
+  background: #1d4ed8;
+  color: white;
+}
+
+.admin-panel {
+  margin: 28px 0;
+  background: white;
+  padding: 26px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.admin-panel textarea {
+  width: 100%;
+  min-height: 90px;
+  margin: 14px 0;
+}
+
+.hint, .status {
+  color: #667085;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 34px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card h4 {
+  font-size: 20px;
+  margin: 18px 0 8px;
+}
+
+.card p {
+  color: #667085;
+  line-height: 1.5;
+  min-height: 68px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  background: #eef2ff;
+}
+
+.actions .danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+@media (max-width: 780px) {
+  .topbar, .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cards, .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h2 {
+    font-size: 28px;
+  }
+}
