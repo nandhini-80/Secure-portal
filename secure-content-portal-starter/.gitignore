@@ -1,8 +1,27 @@
+# Frontend
 node_modules/
 dist/
+
+# Environment / secrets
 .env
+backend/.env
+frontend/.env
+
+# Python
 __pycache__/
 *.pyc
-portal.db
 .venv/
 venv/
+
+# Local database
+portal.db
+backend/portal.db
+
+# Uploaded content
+uploads/
+backend/uploads/
+
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db
