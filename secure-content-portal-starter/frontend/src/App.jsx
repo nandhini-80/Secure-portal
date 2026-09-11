@@ -68,15 +68,22 @@ export default function App() {
 
   const initializePortal = async () => {
     setLoadingUser(true);
-    try {
-      const userResponse = await axios.get(`${API}/api/me`, {
-        withCredentials: true,
-      });
-      setUser(userResponse.data);
+    setLoadingContent(true);
+    setStatus("");
 
-      const contentResponse = await axios.get(`${API}/api/content`, {
-        withCredentials: true,
-      });
+    try {
+      // Run both startup requests together so we do not wait for them one-by-one.
+      // This does not remove a Render cold start, but it reduces avoidable waiting.
+      const [userResponse, contentResponse] = await Promise.all([
+        axios.get(`${API}/api/me`, {
+          withCredentials: true,
+        }),
+        axios.get(`${API}/api/content`, {
+          withCredentials: true,
+        }),
+      ]);
+
+      setUser(userResponse.data);
       setItems(contentResponse.data);
       setStatus("");
     } catch (error) {
@@ -86,10 +93,11 @@ export default function App() {
       setStatus(
         error.response?.status === 401
           ? "Please sign in with Google to access the portal."
-          : "Unable to connect to the portal."
+          : "Unable to connect to the portal. Please try again."
       );
     } finally {
       setLoadingUser(false);
+      setLoadingContent(false);
     }
   };
 
@@ -323,18 +331,6 @@ export default function App() {
     setSortBy("TITLE_ASC");
   };
 
-  if (loadingUser) {
-    return (
-      <div className="app">
-        <div className="loading-screen">
-          <div className="loading-orb" />
-          <h2>Secure Content Portal</h2>
-          <p>Preparing your workspace...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="app">
       {toast && (
@@ -386,7 +382,16 @@ export default function App() {
           </div>
 
           <div className="profile-card">
-            {user ? (
+            {loadingUser ? (
+              <div className="profile-loading" aria-live="polite">
+                <div className="mini-loader" aria-hidden="true" />
+                <div>
+                  <span className="profile-label">Secure connection</span>
+                  <strong>Connecting to portal...</strong>
+                  <small>The first visit may take a few seconds while the server starts.</small>
+                </div>
+              </div>
+            ) : user ? (
               <>
                 <div className="profile-head">
                   {user.picture ? (
@@ -428,7 +433,37 @@ export default function App() {
           </div>
         </section>
 
-        {!user && (
+        {loadingUser && (
+          <section className="startup-section" aria-live="polite">
+            <div className="startup-heading">
+              <div>
+                <span className="eyebrow">Secure workspace</span>
+                <h3>Connecting to your content</h3>
+                <p>We are waking the secure server and preparing your resources.</p>
+              </div>
+              <div className="connection-pill">
+                <span className="connection-dot" />
+                Connecting
+              </div>
+            </div>
+
+            <div className="skeleton-list" aria-hidden="true">
+              {[1, 2, 3].map((item) => (
+                <div className="skeleton-card" key={item}>
+                  <div className="skeleton-icon" />
+                  <div className="skeleton-info">
+                    <div className="skeleton-line small" />
+                    <div className="skeleton-line title" />
+                    <div className="skeleton-line text" />
+                    <div className="skeleton-line text short" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {!loadingUser && !user && (
           <section className="signin-note">
             <div>ℹ️</div>
             <div>
@@ -438,7 +473,7 @@ export default function App() {
           </section>
         )}
 
-        {user && (
+        {!loadingUser && user && (
           <>
             <section className="stats-grid">
               <article className="stat-card">
