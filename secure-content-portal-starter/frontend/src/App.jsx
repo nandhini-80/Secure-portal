@@ -249,6 +249,16 @@ export default function App() {
     setNumPages(null);
     setPdfError("");
 
+    // As soon as the viewer is rendered, move the user to it automatically.
+    // This happens before the file finishes loading, so there is no need to scroll manually.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document
+          .getElementById("content-viewer")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
     try {
       if (item.type === "PDF") {
         const response = await axios.get(
@@ -276,11 +286,6 @@ export default function App() {
       }
     } finally {
       setViewerLoading(false);
-      setTimeout(() => {
-        document
-          .getElementById("content-viewer")
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
     }
   };
 
