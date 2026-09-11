@@ -369,6 +369,14 @@ export default function App() {
 
       <main className="container">
         <section className="hero">
+          <div className="hero-ambient" aria-hidden="true">
+            <span className="hero-orb orb-one" />
+            <span className="hero-orb orb-two" />
+            <span className="hero-orb orb-three" />
+            <span className="hero-spark spark-one">✦</span>
+            <span className="hero-spark spark-two">✦</span>
+            <span className="hero-spark spark-three">✦</span>
+          </div>
           <div className="hero-copy">
             <span className="badge">Secure learning hub</span>
             <h2>Your protected content, organized beautifully.</h2>
@@ -386,7 +394,10 @@ export default function App() {
             )}
           </div>
 
-          <div className="profile-card">
+          <div className="profile-shell">
+            <div className="profile-ring ring-one" aria-hidden="true" />
+            <div className="profile-ring ring-two" aria-hidden="true" />
+            <div className="profile-card">
             {loadingUser ? (
               <div className="profile-loading" aria-live="polite">
                 <div className="mini-loader" aria-hidden="true" />
@@ -435,6 +446,7 @@ export default function App() {
                 </button>
               </>
             )}
+            </div>
           </div>
         </section>
 
